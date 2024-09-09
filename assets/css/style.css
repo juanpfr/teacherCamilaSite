@@ -1,0 +1,1120 @@
+/* ###################### Fontes ###################### */
+
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Office:ital,wght@0,1..1000;1,1..1000&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+/* ################## Configuração Padrão do Site ################### */
+
+body {
+  font-size: 11px;
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+}
+
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.site {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ###################### Faixa do Topo ###################### */
+
+.faixa {
+  background: #202020;
+}
+
+.faixa div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.faixa div div {
+  flex-direction: column;
+  text-align: center;
+  padding: 20px 10px;
+  width: 50%;
+}
+
+.faixa h5 {
+  margin: 5px 0;
+  font-size: 1.6em;
+  font-weight: 700;
+}
+
+.faixa p {
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+/* ###################### Faixa Menu ###################### */
+
+.faixaMenu {
+  padding: 60px 0;
+  box-shadow: 0px 5px 10px #202020 !important;
+  background: white;
+}
+
+.faixaMenu div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.faixaMenu h1 {
+  width: 80px;
+  height: 40px;
+  background: url(../img/logo.svg) no-repeat;
+  text-indent: -9999px;
+}
+
+.menu {
+  align-content: center !important;
+}
+
+.menu ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu ul li {
+  padding: 10px 30px;
+}
+
+.menu ul li a {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #202020;
+}
+
+.menu ul li a:hover {
+  border-bottom: 3px solid;
+}
+
+.faixaMenu div > a {
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #d0006f;
+  background: #fff;
+  border: #d0006f solid 2px;
+  padding: 10px 20px;
+}
+
+.faixaMenu div > a:hover {
+  color: #fff;
+  background: #d0006f;
+}
+
+/* ###################### Menu Mobile ###################### */
+
+.menuMobileIcon {
+  display: none !important;
+}
+
+.menuMobile {
+  display: none !important;
+}
+
+/* ###################### Pós Login ###################### */
+
+.menuLogin i {
+  font-size: 3em;
+}
+
+.menuTrigger {
+  display: inline-block;
+  place-items: center;
+  cursor: pointer;
+}
+
+.subMenuLogin {
+  width: 8%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  margin-top: 200px;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.liLogin {
+  padding: 0.2em 0.4em;
+  padding: 10px 0;
+  border-bottom: 1px solid;
+}
+
+.subMenuLogin a {
+  color: #202020;
+  font-family: "Varela Round", sans-serif;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.menuLogin[data-aberto="true"] > .menuTrigger > .bi-caret-down-square {
+  display: none;
+}
+
+.menuLogin[data-aberto="true"] > .subMenuLogin {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menuLogin[data-aberto="false"] > .menuTrigger > .bi-caret-up-square {
+  display: none;
+}
+
+.menuLogin[data-aberto="false"] > .subMenuLogin {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s step-end;
+}
+
+/* ###################### Subtitulo ###################### */
+
+.subtitulo {
+  padding: 55px 0;
+}
+
+.subtitulo div {
+  display: flex;
+  text-align: center;
+}
+
+.subtitulo p {
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 1.22em;
+  font-weight: 700;
+}
+
+.subtitulo div div:nth-child(2) {
+  width: 343px;
+  height: 1px;
+  background: #202020;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 8px;
+}
+
+/* ###################### Agendamento Banner ###################### */
+
+.agendamentoBanner {
+  width: 100%;
+  height: 600px;
+  background-image: url(../img/banner.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.agendamentoBanner div {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.agendamentoBanner div div {
+  flex-direction: initial;
+  gap: 10px !important;
+  height: 15% !important;
+}
+
+.agendamentoBanner div div h1 {
+  font-size: 10em;
+  font-family: "Protest Riot", sans-serif;
+}
+
+.agendamentoBanner div div h1:nth-child(1) {
+  color: #ffffff;
+}
+
+.agendamentoBanner div div h1:nth-child(2) {
+  color: #d0006f;
+}
+
+.agendamentoBanner p {
+  font-size: 2em;
+  color: white;
+}
+
+.agendamentoBanner h3 {
+  font-size: 3em;
+  margin: 26px;
+  font-family: "Protest Riot";
+}
+
+.agendamentoBanner a {
+  padding: 15px;
+  background-color: #d0006f;
+  border-radius: 25px;
+  font-size: 3em;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.agendamentoBanner a:hover {
+  color: #fff;
+  background-color: #a8005ad2;
+  padding: 15px;
+  border-radius: 25px;
+  transition: 0.25s;
+  transform: scale(1.03); /* Zoom na imagem */
+  filter: brightness(60%); /* Escurece a imagem */
+}
+
+/* ###################### Informações ###################### */
+
+.info {
+  background-color: #202020;
+}
+
+.info h2 {
+  display: flex;
+  justify-content: center;
+  font-family: "Protest Riot";
+  font-size: 6em;
+  font-weight: 700;
+  align-items: center;
+  padding: 110px 0 40px 0;
+  color: #d0006f;
+}
+
+.box {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box div {
+  text-align: -webkit-center;
+}
+
+.box h3 {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Protest Riot";
+  font-size: 3em;
+  padding: 40px 0;
+}
+
+.box p {
+  text-align: center;
+  color: #ffffff;
+  padding: 40px 0;
+  font-size: 1.8em;
+  width: 80%;
+}
+
+.info img {
+  box-shadow: 5px 5px 20px black;
+  width: 70%;
+}
+
+/* #################### Informações (Maneiro😎) #################### */
+
+.infoTeacher {
+  display: flex;
+  flex-direction: column;
+  background-color: #202020;
+}
+
+.infoRight {
+  display: flex;
+  justify-content: space-between;
+  padding: 70px 0;
+}
+
+.infoLeft {
+  display: flex;
+  justify-content: space-between;
+  padding: 70px 0;
+}
+
+.infoConteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: center;
+  width: 50%;
+}
+
+.tituloInfo {
+  display: flex;
+  align-items: center;
+}
+
+.tituloInfo h3 {
+  font-family: "Protest Riot";
+  font-size: 5em;
+  font-weight: 700;
+  color: #d0006f;
+  margin-left: 40px;
+}
+
+.textoInfo {
+  padding: 40px 0;
+  text-align: -webkit-center;
+}
+
+.textoInfo p {
+  text-align: left;
+  font-family: "Varela Round", sans-serif;
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 2em;
+  color: white;
+}
+
+.textoInfo a {
+  color: #d0006f;
+}
+
+.imgInfo {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.imgInfo img {
+  width: 65%;
+}
+
+/* #################### Sessão Sobre #################### */
+
+.sobre {
+  padding: 50px 0;
+}
+
+.sobre h2 {
+  color: #202020;
+  font-size: 4em;
+  font-family: "Protest Riot";
+}
+
+.ftexto {
+  padding: 50px;
+  padding-bottom: 100px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.ftexto p {
+  padding-left: 80px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  line-height: 2em;
+}
+
+.dados {
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dados h4 {
+  color: #202020;
+  font-size: 5em;
+  padding-left: 180px;
+}
+
+.dados p {
+  display: flex;
+  align-items: center;
+  padding-left: 80px;
+  padding-top: 50px;
+  font-size: 3.2em;
+  font-family: "Protest Riot";
+}
+
+/* #################### Rodapé #################### */
+
+.rodape {
+  background: #202020;
+}
+
+.rodape div > div:nth-child(1) {
+  display: flex;
+  justify-content: center;
+}
+
+.rodape div > div:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rodape div > div:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
+}
+
+.titulo2 div {
+  justify-content: center;
+  display: flex;
+}
+
+.titulo2 h2 {
+  padding: 40px 0;
+  font-size: 7em;
+  font-family: "Protest Riot", sans-serif;
+}
+
+.titulo2 h2:nth-child(1) {
+  color: white;
+}
+
+.titulo2 h2:nth-child(2) {
+  color: #d0006f;
+  padding-left: 10px;
+}
+
+.rodape div div:nth-child(2) div {
+  display: flex;
+  padding: 40px 0;
+}
+
+.rodape div div:nth-child(2) h3 {
+  font-family: "Protest Riot", sans-serif;
+  font-size: 4em;
+}
+
+.rodape div div:nth-child(2) img {
+  width: 24px;
+  height: 24px;
+  margin: 20px 0 0 10px;
+}
+
+.rodape div div:nth-child(3) li {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 20px 0px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #d0006f;
+}
+
+.rodape div div:nth-child(3) > ul li a {
+  font-size: 1.5em;
+}
+
+.rodape div div:nth-child(3) ul:nth-child(2) {
+  width: 30%;
+  margin-right: 60px;
+}
+
+.rodape div div:nth-child(3) ul:nth-child(2) h6 {
+  background: transparent;
+  font-size: 2em;
+  line-height: 2em;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.rodape div div:nth-child(3) ul:nth-child(3) li {
+  display: flex;
+  justify-content: center;
+  margin: 0px 60px 0px 0px;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.rodape div div:nth-child(3) ul:nth-child(3) li a {
+  font-size: 1.5em;
+}
+
+.rodape > div:nth-child(2) {
+  display: flex;
+  background: #000;
+  padding: 20px 0;
+  border-top: solid 1px #d0006f;
+}
+
+.rodape > div:nth-child(2) h4 {
+  font-size: 1.5em;
+  margin: 0 auto;
+}
+
+/* #################### Rodapé (branco) #################### */
+
+.rodapeBranco div > div:nth-child(2) {
+  display: flex;
+}
+
+.rodapeBranco > div:nth-child(2) {
+  display: flex;
+  justify-content: end;
+  background: #000; /* cor clara */
+  padding: 20px 0;
+  border-top: solid 2px #d0006f; /* rosa */
+}
+
+.rodapeBranco > div:nth-child(2) h4 {
+  font-size: 1.5em;
+  margin: 0 auto;
+  color: #fff; /* cor escura */
+}
+
+/* #################### Aluno #################### */
+
+.aluno {
+  background-image: url(../img/background.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+.sessoes {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px;
+}
+
+.sessoes div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.sessoes div:nth-child(1) h2 {
+  font-family: "Protest Riot";
+  font-size: 5em;
+}
+
+.sessoes div:nth-child(1) p {
+  color: #c0c0c0;
+  font-size: 3em;
+  padding-top: 30px;
+}
+
+.sessoes div:nth-child(2) {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* #################### Animação IMG Aluno #################### */
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-link {
+  display: block;
+}
+
+.image {
+  display: block;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.text {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.image-container:hover .image {
+  transform: scale(1.03); /* Zoom na imagem */
+  filter: brightness(60%); /* Escurece a imagem */
+}
+
+.image-container:hover .overlay {
+  opacity: 1; /* Torna a overlay visÃ­vel ao passar o mouse */
+}
+
+.image-container:hover .text {
+  opacity: 1; /* Torna o texto visÃ­vel ao passar o mouse */
+}
+
+.session_games {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  width: 100%;
+  height: 680px;
+  background-color: #d0006f;
+  background-image: url(../img/background.jpeg);
+}
+
+.texto_games {
+  width: 300px;
+  height: 300px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.texto_games h1 {
+  font-family: "Protest Riot";
+  font-size: 40pt;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.texto_games p {
+  color: #c0c0c0;
+  font-size: 3em;
+}
+
+.img_games {
+  display: flex;
+}
+
+.img_games aside {
+  box-shadow: #0000009c 10px 0px 15px;
+  margin-right: 100px;
+  width: 350px;
+  height: 506px;
+  border-radius: 50px;
+  /* border: black 1px solid; */
+}
+
+.img_1games {
+  background-size: cover;
+  background-image: url(../img/200.jpg);
+}
+
+.img_2games {
+  background-image: url(../img/wepik-export-20240323205344n5JO.jpeg);
+  background-size: cover;
+}
+
+.hover_1games {
+  cursor: pointer;
+  flex-direction: column;
+  width: 350px;
+  height: 506px;
+  border-radius: 50px;
+  background-color: #000000cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.hover_1games p {
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 12px;
+  font-size: 15pt;
+  border: #d0006f 5px solid;
+}
+
+.hover_2games p {
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 12px;
+  font-size: 15pt;
+  border: #d0006f 5px solid;
+}
+
+.hover_2games {
+  cursor: pointer;
+  flex-direction: column;
+  width: 350px;
+  height: 506px;
+  border-radius: 50px;
+  background-color: #000000cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.img_1games:hover .hover_1games {
+  display: flex;
+  transform: scale(1.03); /* Zoom na imagem */
+  filter: brightness(60%); /* Escurece a imagem */
+}
+
+.img_2games:hover .hover_2games {
+  display: flex;
+  transform: scale(1.03); /* Zoom na imagem */
+  filter: brightness(60%); /* Escurece a imagem */
+}
+
+/* ################# PG CONTATO ################ */
+
+.form {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.form h2 {
+  display: flex;
+  justify-content: center;
+  font-family: "Protest Riot";
+  font-size: 6em;
+  font-weight: 700;
+  align-items: center;
+  padding: 110px 0 40px 0;
+  color: #d0006f;
+}
+
+.form form {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5%;
+}
+
+.form form > div {
+  width: 48%;
+}
+
+.form form > div div {
+  margin-bottom: 3%;
+}
+
+.form input,
+.form textarea,
+.form button {
+  width: 95%;
+  padding: 2%;
+  font-style: 1.8em;
+  background: #ccc;
+  color: #000000;
+  border: solid thin #b2360f;
+}
+
+.form textarea {
+  height: 154px;
+  resize: none;
+}
+
+.form form div:nth-child(2) div:nth-child(2) {
+  display: flex;
+  justify-content: space-around;
+}
+
+.form input[type="submit"],
+.form button {
+  width: 40%;
+  border-radius: 10px 5px;
+  color: #333;
+  cursor: pointer;
+}
+
+.form input[type="submit"]:hover,
+.form button:hover {
+  background: #333;
+  color: #d0006f;
+  border: solid thin #000000;
+}
+
+.map {
+  width: 100%;
+}
+
+.map iframe {
+  width: 100%;
+}
+
+/* ######################### Login ######################### */
+
+.login {
+  background-color: #b6b6b6;
+  border-radius: 30px;
+  width: 400px;
+  height: 500px;
+  margin: 40px auto;
+}
+
+#tituloLogin {
+  color: #fff;
+  font-size: 6em;
+  text-align: center;
+  font-family: "Protest Riot", sans-serif;
+  padding: 20px 0;
+}
+
+.formLogin {
+  padding: 40px 0;
+}
+
+.formLogin h3 {
+  font-size: 3em;
+}
+
+.formLogin input {
+  width: 300px;
+  height: 30px;
+}
+
+/* ####### JOGOSSSSSS ####### */
+
+.jogos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.jogos h2 {
+  display: flex;
+  justify-content: center;
+  font-family: "Protest Riot";
+  font-size: 6em;
+  font-weight: 700;
+  align-items: center;
+  padding: 110px 0 40px 0;
+  color: #d0006f;
+}
+
+.catalogo {
+  display: flex;
+  padding: 20px;
+  background-color: #202;
+}
+
+.catalogo .slick-prev:before,
+.catalogo .slick-next:before {
+  font-size: 50px;
+  color: #d0006f;
+}
+
+.catalogo .slick-prev {
+  left: 25px;
+  margin-top: -120px;
+  z-index: 2;
+}
+
+.catalogo .slick-next {
+  right: 55px;
+  margin-top: -120px;
+}
+
+.boxgame img {
+  width: 200px;
+  height: 200px;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.boxgame {
+  position: relative;
+  width: 300px; /* ajuste conforme necessário */
+}
+
+.span {
+  font-size: 12pt;
+  border: #d0006f solid 5px;
+  padding: 15px;
+  position: absolute;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.boxgame img:hover + .span {
+  opacity: 1;
+}
+
+.boxgame img:hover {
+  width: 200px;
+  height: 200px;
+  transform: scale(1.03); /* Zoom na imagem */
+  filter: brightness(60%); /* Escurece a imagem */
+}
+
+.boxgame {
+  display: flex;
+  flex-direction: column;
+}
+
+.boxgame h3 {
+  color: #ffffff;
+  font-family: "Protest Riot";
+  font-size: 3em;
+  padding: 40px 0;
+}
+
+.boxgame p {
+  color: #c9c9c9c9;
+  font-size: 14pt;
+  width: 200px;
+  padding: 10px;
+}
+
+.catalogo {
+  width: 100%;
+}
+
+/* ######################### Topo Game/Agendamento/Aluno ######################## */
+
+#sim {
+  background: url(../img/backgroundAtividade.png) no-repeat;
+}
+
+.topoVoltar {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+
+  background-color: #202020;
+}
+
+.topoVoltar h1 {
+  font-size: 5em;
+  font-family: "Protest Riot", sans-serif;
+}
+
+.icon {
+  font-size: 50px;
+  color: #d0006f;
+}
+
+.itemMenu a {
+  align-items: center;
+  font-size: 25px;
+  display: flex;
+
+  font-family: "Protest Riot", sans-serif;
+  gap: 20px;
+}
+
+#imgLoginAluno {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+#nomeLoginAluno {
+  text-align: center;
+  font-size: 2em;
+  color: white;
+  font-family: "Protest Riot", sans-serif;
+}
+
+#loginCara {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.conteudoAtividade {
+  margin: 2%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.smallCard {
+  background: rgba(32, 32, 32, 0.7); /* Cor de fundo com opacidade */
+  width: 35%;
+  height: 620px;
+  border-radius: 20px;
+}
+
+.bigCard {
+  margin-left: 2%;
+  background: rgba(32, 32, 32, 0.7); /* Cor de fundo com opacidade */
+  width: 65%;
+  height: 620px;
+  border-radius: 20px;
+}
+
+.smallCard,
+.bigCard {
+  position: relative; /* Necessário para posicionar o pseudo-elemento */
+  border-radius: 20px;
+}
+
+.smallCard::before,
+.bigCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #202020;
+  opacity: 0.7;
+  border-radius: 20px; /* Para corresponder ao arredondamento da borda do elemento pai */
+  z-index: -1; /* Coloca o pseudo-elemento atrás do conteúdo */
+}
+
+.atCardTitulo {
+  font-size: 4em;
+  text-align: center;
+  padding: 10px 0;
+  box-shadow: 0px 5px 0px white !important;
+}
+
+.table-scroll {
+  max-height: 355px;
+  overflow-y: auto;
+  display: block;
+}
+
+.nameAtividade {
+  font-weight: bold;
+}
+
+#perguntas h3 {
+  font-weight: 2px;
+}
+
+/* ######################## Meu Perfil ########################*/
+
+#imgFoto {
+  width: 300px;
+  height: 300px;
+}
+
+#h2MeuPerfil {
+  font-family: "Protest Riot", sans-serif;
+  font-weight: 700;
+  font-size: 4em;
+  color: #d0006f;
+  text-align: center;
+  padding: 60px 0 0 0;
+}
