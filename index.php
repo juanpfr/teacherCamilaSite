@@ -64,12 +64,12 @@ if (isset($_SESSION['idAluno'])) {
 
     // Verificar se a página é agendamento e se o usuário não está logado
     if ($pagina === 'agendamento' && $tipo !== 'aluno') {
-        header("Location: login.php");
+        header("Location: login");
         exit();
     }
 
     if ($pagina === 'aluno' && $tipo !== 'aluno') {
-        header("Location: login.php");
+        header("Location: login");
         exit();
     }
 

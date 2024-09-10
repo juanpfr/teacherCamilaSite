@@ -101,7 +101,7 @@ function Login(){
                       "<div class='msgLogin'>" + data.success + "</div>"
                   )
                   var idAluno = data.idAluno;
-                  window.location.href = 'http://localhost/teacher_camila/index.php'
+                  window.location.href = 'http://localhost/teacherCamilaSite/index'
               }else{
                   //Não deu certo (login desativado ou bloqueado sla alguma coisa assim)
                   $("#msglogin").html(

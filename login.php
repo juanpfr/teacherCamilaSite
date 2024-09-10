@@ -93,7 +93,7 @@
 <body>
     <section class="vh-100 gradient-custom">
         <div class="itemMenu">
-            <a href="index.php">
+            <a href="index">
                 <span class="icon"><i class="bi bi-arrow-left-circle"></i></span>
                 <span class="txtLink">Voltar</span>
             </a>

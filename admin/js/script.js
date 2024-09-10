@@ -24,7 +24,7 @@ function LoginAdmin(){
                       "<div class='msgLogin'>" + data.success + "</div>"
                   )
                   var idUsuario = data.idUsuario;
-                  window.location.href = 'http://localhost/teacher_camila/admin/index.php?p=dashboard'
+                  window.location.href = 'http://localhost/teacherCamilaSite/admin/index.php?p=dashboard'
               }else{
                   //Não deu certo (login desativado ou bloqueado sla alguma coisa assim)
                   $("#msglogin").html(

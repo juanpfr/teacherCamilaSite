@@ -8,7 +8,7 @@ if (isset($_SESSION['id'])) {
     $tipo = 'professora';
 } else {
 
-    header('Location:http://localhost/teacher_camila/admin/login.php');
+    header('Location:http://localhost/teacherCamilaSite/admin/login.php');
     exit();
 }
 ?>
@@ -46,7 +46,7 @@ if (isset($_SESSION['id'])) {
                 <h2>Dashboard Teacher Camila</h2>
             </div>
             <div>
-                <a href="http://localhost/teacher_camila/admin/destroy_session.php">
+                <a href="http://localhost/teacherCamilaSite/admin/destroy_session.php">
                     <i id="btnSair" class="bi bi-box-arrow-left"></i>
                 </a>
             </div>

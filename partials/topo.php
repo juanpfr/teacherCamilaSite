@@ -26,11 +26,11 @@
         <!--Menu para desktop-->
         <nav class="menu">
             <ul>
-                <li><a href="index.php">Início</a></li>
-                <li><a href="index.php?pa=sobre">Sobre</a></li>
-                <li><a href="index.php?pa=aluno">Aluno</a></li>
-                <li><a href="index.php?pa=agendamento">Agendamento</a></li>
-                <li><a href="index.php?pa=contato">Contato</a></li>
+                <li><a href="index">Início</a></li>
+                <li><a href="index?pa=sobre">Sobre</a></li>
+                <li><a href="index?pa=aluno">Aluno</a></li>
+                <li><a href="index?pa=agendamento">Agendamento</a></li>
+                <li><a href="index?pa=contato">Contato</a></li>
             </ul>
         </nav>
 
@@ -54,14 +54,14 @@
                             <i class="bi bi-caret-up-square"></i>
                         </span>
                         <ul class="subMenuLogin">
-                            <li class="liLogin"><a href="index.php?pa=meuPerfil">Meu Perfil</a></li>
-                            <li class="liLogin"><a href="index.php?pa=meuPerfil">Aulas</a></li>
-                            <li class="liLogin"><a href="https://teachercamila.smpsistema.com.br/admin/destroy_session.php">Sair</a></li>
+                            <li class="liLogin"><a href="index?pa=meuPerfil">Meu Perfil</a></li>
+                            <li class="liLogin"><a href="index?pa=meuPerfil">Aulas</a></li>
+                            <li class="liLogin"><a href="http://localhost/teacherCamilaSite/admin/destroy_session.php">Sair</a></li>
                         </ul>
                     </div>
                 </div>
             <?php } else { ?>
-                <a href="login.php">Login</a>
+                <a href="login">Login</a>
             <?php } ?>
         </div>
 
@@ -98,25 +98,25 @@
                             <i class="bi bi-caret-up-square"></i>
                         </span>
                         <ul class="subMenuLogin">
-                            <li class="liLogin"><a href="index.php?pa=meuPerfil">Meu Perfil</a></li>
-                            <li class="liLogin"><a href="index.php?pa=meuPerfil">Aulas</a></li>
-                            <li class="liLogin"><a href="https://teachercamila.smpsistema.com.br/admin/destroy_session.php">Sair</a></li>
+                            <li class="liLogin"><a href="index?pa=meuPerfil">Meu Perfil</a></li>
+                            <li class="liLogin"><a href="index?pa=meuPerfil">Aulas</a></li>
+                            <li class="liLogin"><a href="http://localhost/teacherCamilaSite/admin/destroy_session.php">Sair</a></li>
                         </ul>
                     </div>
                 </div>
             <?php } else { ?>
-                <a href="login.php">Login</a>
+                <a href="login">Login</a>
             <?php } ?>
         </div>
 
         <!--Menu-->
         <nav class="menu">
             <ul>
-                <li><a href="index.php">Início</a></li>
-                <li><a href="index.php?pa=sobre">Sobre</a></li>
-                <li><a href="index.php?pa=aluno">Aluno</a></li>
-                <li><a href="index.php?pa=agendamento">Agendamento</a></li>
-                <li><a href="index.php?pa=contato">Contato</a></li>
+                <li><a href="index">Início</a></li>
+                <li><a href="index?pa=sobre">Sobre</a></li>
+                <li><a href="index?pa=aluno">Aluno</a></li>
+                <li><a href="index?pa=agendamento">Agendamento</a></li>
+                <li><a href="index?pa=contato">Contato</a></li>
             </ul>
         </nav>
     </div>
