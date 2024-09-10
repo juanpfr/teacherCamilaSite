@@ -9,16 +9,16 @@
     <!--Links-->
     <link rel="stylesheet" href="assets/css/reset.css">
 
-    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
 
-    <link rel="stylesheet" href="css/slick-theme.css">
+    <link rel="stylesheet" href="assets/css/slick-theme.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Responsivo -->
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 
 
