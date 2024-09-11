@@ -38,7 +38,7 @@ if (isset($_POST['email'])) {
         $mail->Host       = $_ENV['SMTP_HOST'];
         $mail->SMTPAuth   = true;
         $mail->Username   = $_ENV['SMTP_USER'];
-        $mail->Password   = $_ENV['SMTP_PASS'];
+        $mail->Password   = $_ENV['SMTP_PASSWORD'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
 
@@ -82,7 +82,7 @@ if (isset($_POST['email'])) {
     <title>Teacher Camila</title>
 
     <!--Link para o arquivo que da um reset maneiro na pagina (Tem que ficar antes pq se n reseta tudo mo perigo)-->
-    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
 
     <!--Ícones do Google-->
 

@@ -1,21 +1,28 @@
 <?php
 
-require 'vendor/autoload.php'; // Para carregar o Dotenv
+require __DIR__ . '../../../vendor/autoload.php'; // Caminho para o autoload do Composer
 
-class Conexao{
+use Dotenv\Dotenv;
+
+class Conexao {
 
     // Método
-    public static function LigarConexao(){
+    public static function LigarConexao() {
 
         // Carregar as variáveis do .env
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-        $dotenv->load();
+        try {
+            $dotenv = Dotenv::createImmutable(__DIR__ . '../../../'); // Caminho para a raiz do projeto
+            $dotenv->load();
+        } catch (Exception $e) {
+            echo "Erro ao carregar o .env: " . $e->getMessage();
+            return null;
+        }
 
         // Informações de conexão carregadas do .env
         $host = $_ENV['DB_HOST'];
         $dbname = $_ENV['DB_NAME'];
         $username = $_ENV['DB_USER'];
-        $password = $_ENV['DB_PASS'];
+        $password = $_ENV['DB_PASSWORD'];
 
         try {
             $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -23,6 +30,7 @@ class Conexao{
             return $pdo;
         } catch (PDOException $e) {
             echo "Erro na conexão: " . $e->getMessage();
+            return null;
         }
     }
 }
