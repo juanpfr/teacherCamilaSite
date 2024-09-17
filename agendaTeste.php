@@ -29,37 +29,82 @@ function verificarPagamento($codigoPix)
     return $pagamentoAprovado;
 }
 
+// Função para verificar se a data e horário já estão agendados
+function verificarHorarioOcupado($pdo, $dataAula, $horaInicio, $idAluno)
+{
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM tbl_agendamento_aula WHERE dataAula = ? AND horaInicio = ? AND idAluno = ?");
+    $stmt->execute([$dataAula, $horaInicio, $idAluno]);
+    return $stmt->fetchColumn() > 0;
+}
+
+// Gerar lista de horários fixos entre 8:00 e 16:00 com intervalo de 30 minutos
+function gerarHorariosDisponiveis()
+{
+    $horarios = [];
+    $inicio = strtotime('08:00');
+    $fim = strtotime('16:00');
+
+    while ($inicio <= $fim) {
+        $horarios[] = date('H:i', $inicio);
+        $inicio = strtotime('+30 minutes', $inicio);
+    }
+
+    return $horarios;
+}
+
 // Verificar se o formulário foi enviado
+$mostrarModal = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dataAula = $_POST['dataAula'];
     $horaInicio = $_POST['horaInicio'];
     $duracaoAula = $_POST['duracaoAula'];
-    $horaFim = $duracaoAula === '30min' ? date("H:i", strtotime($horaInicio) + 1800) : date("H:i", strtotime($horaInicio) + 3600);
+    $opcaoMensal = isset($_POST['opcaoMensal']) ? $_POST['opcaoMensal'] : null;
 
-    // Verificar se o pagamento foi aprovado
-    if (verificarPagamento($codigoPix)) {
-        $pdo = Conexao::LigarConexao();
-        if ($pdo) {
-            // Verificar se o horário já foi agendado
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM tbl_agendamento_aula WHERE dataAula = ? AND horaInicio = ? AND idAluno = ?");
-            $stmt->execute([$dataAula, $horaInicio, $idAluno]);
-            $horarioOcupado = $stmt->fetchColumn();
+    $pdo = Conexao::LigarConexao();
+    if ($pdo) {
+        if ($opcaoMensal) {
+            // Inserir o agendamento mensal no banco de dados
+            $stmt = $pdo->prepare("INSERT INTO tbl_agendamento_mensal (idAluno, diaSemana, horaInicio) VALUES (?, ?, ?)");
+            $stmt->execute([$idAluno, $opcaoMensal, $horaInicio]);
 
-            if ($horarioOcupado > 0) {
-                echo "<div class='alert alert-danger'>O horário selecionado já está agendado. Escolha outro horário.</div>";
-            } else {
-                // Inserir o agendamento no banco de dados
-                $stmt = $pdo->prepare("INSERT INTO tbl_agendamento_aula (idAluno, dataAula, horaInicio, horaFim) 
-                                       VALUES (?, ?, ?, ?)");
-                $stmt->execute([$idAluno, $dataAula, $horaInicio, $horaFim]);
+            $mostrarModal = true;
+        } else if ($duracaoAula) {
+            if ($duracaoAula === '30min') {
+                $horaFim = date("H:i", strtotime($horaInicio) + 1800);
 
-                echo "<div class='alert alert-success'>Agendamento realizado com sucesso!</div>";
+                // Verificar se o horário já foi agendado
+                if (verificarHorarioOcupado($pdo, $dataAula, $horaInicio, $idAluno)) {
+                    echo "<div class='alert alert-danger'>O horário selecionado já está agendado. Escolha outro horário.</div>";
+                } else {
+                    // Inserir o agendamento no banco de dados
+                    $stmt = $pdo->prepare("INSERT INTO tbl_agendamento_aula (idAluno, dataAula, horaInicio, horaFim) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$idAluno, $dataAula, $horaInicio, $horaFim]);
+
+                    // Para cobrança de 1 hora, duplicar o horário
+                    $dataAula2 = date("Y-m-d", strtotime($dataAula . ' + 30 minutes')); // Adiciona 30 minutos para a segunda aula
+                    $stmt = $pdo->prepare("INSERT INTO tbl_agendamento_aula (idAluno, dataAula, horaInicio, horaFim) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$idAluno, $dataAula2, $horaFim, date("H:i", strtotime($horaFim) + 3600)]);
+
+                    $mostrarModal = true;
+                }
+            } else if ($duracaoAula === '60min') {
+                // Verificar se o horário já foi agendado
+                if (verificarHorarioOcupado($pdo, $dataAula, $horaInicio, $idAluno)) {
+                    echo "<div class='alert alert-danger'>O horário selecionado já está agendado. Escolha outro horário.</div>";
+                } else {
+                    // Inserir o agendamento no banco de dados
+                    $horaFim = date("H:i", strtotime($horaInicio) + 3600);
+                    $stmt = $pdo->prepare("INSERT INTO tbl_agendamento_aula (idAluno, dataAula, horaInicio, horaFim) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$idAluno, $dataAula, $horaInicio, $horaFim]);
+
+                    $mostrarModal = true;
+                }
             }
         } else {
-            echo "<div class='alert alert-danger'>Erro ao conectar com o banco de dados.</div>";
+            echo "<div class='alert alert-danger'>Por favor, escolha a duração da aula e defina a opção de agendamento mensal, se aplicável.</div>";
         }
     } else {
-        echo "<div class='alert alert-danger'>Pagamento não aprovado. Verifique o pagamento e tente novamente.</div>";
+        echo "<div class='alert alert-danger'>Erro ao conectar com o banco de dados.</div>";
     }
 }
 ?>
@@ -111,6 +156,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             max-width: 200px;
             max-height: 200px;
         }
+
+        #mensalOptions {
+            display: none;
+        }
     </style>
 </head>
 
@@ -119,139 +168,132 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container mt-5">
         <h1 class="mb-4">Agendamento de Aulas</h1>
         <form id="agendamentoForm" action="" method="POST" class="row g-3">
-            <div class="col-md-6">
-                <label class="form-label">Duração da Aula</label>
+            <div class="col-md-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="duracaoAula" id="duracao30min" value="30min" checked onchange="atualizarHorarios()">
-                    <label class="form-check-label" for="duracao30min">30 minutos</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="duracaoAula" id="duracao60min" value="60min" onchange="atualizarHorarios()">
-                    <label class="form-check-label" for="duracao60min">1 hora</label>
+                    <input class="form-check-input" type="checkbox" id="opcaoMensal" name="opcaoMensal" value="1">
+                    <label class="form-check-label" for="opcaoMensal">Agendar mensalmente</label>
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <label for="dataAula" class="form-label">Data da Aula</label>
-                <input type="date" class="form-control" id="dataAula" name="dataAula" required>
+            <div id="mensalOptions">
+                <div class="col-md-6">
+                    <label for="diaSemana" class="form-label">Dia da Semana</label>
+                    <select class="form-select" id="diaSemana" name="opcaoMensal">
+                        <option value="1">Segunda-feira</option>
+                        <option value="2">Terça-feira</option>
+                        <option value="3">Quarta-feira</option>
+                        <option value="4">Quinta-feira</option>
+                        <option value="5">Sexta-feira</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="calendarOptions">
+                <div class="col-md-6">
+                    <label for="dataAula" class="form-label">Data da Aula</label>
+                    <input type="date" class="form-control" id="dataAula" name="dataAula" required>
+                </div>
             </div>
 
             <div class="col-md-6">
                 <label for="horaInicio" class="form-label">Hora de Início</label>
                 <select class="form-select" id="horaInicio" name="horaInicio" required>
-                    <!-- Horários serão preenchidos dinamicamente -->
+                    <?php foreach (gerarHorariosDisponiveis() as $horario): ?>
+                        <option value="<?php echo $horario; ?>"><?php echo $horario; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
-            <div class="col-12">
-                <button type="button" class="btn btn-primary" onclick="abrirModal()">Agendar Aula</button>
+            <div class="col-md-6">
+                <label for="horaFim" class="form-label">Hora de Fim</label>
+                <input type="text" class="form-control" id="horaFim" name="horaFim" readonly>
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label">Duração da Aula</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="duracao30min" name="duracaoAula" value="30min">
+                    <label class="form-check-label" for="duracao30min">30 minutos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="duracao60min" name="duracaoAula" value="60min">
+                    <label class="form-check-label" for="duracao60min">1 hora</label>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Agendar Aula</button>
             </div>
         </form>
-    </div>
 
-    <!-- Modal -->
-    <div id="pagamentoModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="fecharModal()">&times;</span>
-            <p>O status de pagamento foi alterado para <strong>Pendente</strong>.</p>
-            <p>Faça o pagamento usando o QR Code abaixo:</p>
-            <img src="<?php echo $qrCodeUrl; ?>" alt="QR Code PIX" class="qr-code">
-            <p>Após realizar o pagamento, confirme o agendamento clicando no botão abaixo.</p>
-            <button type="button" class="btn btn-success" onclick="submitForm()">Confirmar Agendamento</button>
+        <div id="paymentModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Pagamento via PIX</h2>
+                <img src="<?php echo $qrCodeUrl; ?>" alt="QR Code" class="qr-code">
+                <p>Use o código abaixo para realizar o pagamento:</p>
+                <p><strong><?php echo $codigoPix; ?></strong></p>
+                <p>Após o pagamento, aguarde a confirmação.</p>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Função para abrir o pop-up de pagamento
-        function abrirModal() {
-            const modal = document.getElementById('pagamentoModal');
-            modal.style.display = 'block';
-        }
+        // Mostrar o modal de pagamento após o envio do formulário
+        window.addEventListener('load', function() {
+            <?php if ($mostrarModal): ?>
+                var modal = document.getElementById("paymentModal");
+                modal.style.display = "block";
+                var span = document.getElementsByClassName("close")[0];
 
-        // Função para fechar o pop-up de pagamento
-        function fecharModal() {
-            const modal = document.getElementById('pagamentoModal');
-            modal.style.display = 'none';
-        }
-
-        // Submeter o formulário após confirmar no pop-up
-        function submitForm() {
-            fecharModal();
-            document.getElementById('agendamentoForm').submit();
-        }
-
-        // Função para atualizar os horários com base na duração escolhida
-        function atualizarHorarios() {
-            const duracao30min = document.getElementById('duracao30min').checked;
-            const horaInicio = document.getElementById('horaInicio');
-
-            // Limpar as opções atuais
-            horaInicio.innerHTML = '';
-
-            const horarios = duracao30min ?
-                ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30'] :
-                ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
-
-            horarios.forEach(function(hora) {
-                const option = document.createElement('option');
-                option.value = hora;
-                option.textContent = hora;
-                horaInicio.appendChild(option);
-            });
-        }
-
-        // Validar se a data é um dia útil e se é a partir de hoje
-        function validarDiasUteis() {
-            const dataAula = document.getElementById('dataAula');
-            const hoje = new Date();
-            const diasUteis = [1, 2, 3, 4, 5]; // Seg, Ter, Qua, Qui, Sex
-
-            dataAula.addEventListener('change', function() {
-                const dataSelecionada = new Date(this.value);
-                const diaSemana = dataSelecionada.getDay();
-
-                if (!diasUteis.includes(diaSemana)) {
-                    alert('Apenas dias úteis são permitidos para agendamento.');
-                    this.value = '';
+                span.onclick = function() {
+                    modal.style.display = "none";
                 }
-            });
 
-            // Configurar a data mínima e desabilitar sábados e domingos
-            dataAula.setAttribute('min', hoje.toISOString().split('T')[0]);
-        }
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            <?php endif; ?>
+        });
 
-        // Função para desabilitar sábados e domingos no campo de data
-        function desabilitarDiasNaoUteis() {
-            const dataAula = document.getElementById('dataAula');
-            const hoje = new Date();
-            let html = '';
+        // Toggle visibility of mensalOptions based on checkbox
+        document.getElementById('opcaoMensal').addEventListener('change', function() {
+            const mensalOptions = document.getElementById('mensalOptions');
+            const calendarOptions = document.getElementById('calendarOptions');
+            if (this.checked) {
+                mensalOptions.style.display = 'block';
+                calendarOptions.style.display = 'none';
+            } else {
+                mensalOptions.style.display = 'none';
+                calendarOptions.style.display = 'block';
+            }
+        });
 
-            // Loop para construir as opções de data do calendário
-            for (let i = 0; i < 30; i++) { // Exibir próximo mês
-                let data = new Date(hoje);
-                data.setDate(hoje.getDate() + i);
-                let dia = data.getDate();
-                let mes = data.getMonth() + 1;
-                let ano = data.getFullYear();
-                let diaSemana = data.getDay();
+        function atualizarHorarios() {
+            const duracao = document.querySelector('input[name="duracaoAula"]:checked').value;
+            const horaInicio = document.getElementById('horaInicio').value;
+            let horaFim = '';
 
-                if (diaSemana === 6 || diaSemana === 0 || data < hoje) { // Sábado, Domingo ou dia passado
-                    html += `<option value="${ano}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}" disabled>${ano}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}</option>`;
-                } else {
-                    html += `<option value="${ano}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}">${ano}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}</option>`;
+            if (duracao === '30min') {
+                if (horaInicio) {
+                    horaFim = new Date('1970-01-01T' + horaInicio + 'Z');
+                    horaFim.setMinutes(horaFim.getMinutes() + 30);
+                    document.getElementById('horaFim').value = horaFim.toISOString().substring(11, 16);
+                }
+            } else if (duracao === '60min') {
+                if (horaInicio) {
+                    horaFim = new Date('1970-01-01T' + horaInicio + 'Z');
+                    horaFim.setMinutes(horaFim.getMinutes() + 60);
+                    document.getElementById('horaFim').value = horaFim.toISOString().substring(11, 16);
                 }
             }
-
-            dataAula.innerHTML = html;
         }
 
-        // Chamar as funções ao carregar a página
-        window.onload = function() {
-            atualizarHorarios();
-            validarDiasUteis();
-            desabilitarDiasNaoUteis();
-        };
+        // Atualiza hora de fim quando o horário de início muda
+        document.getElementById('horaInicio').addEventListener('change', atualizarHorarios);
+        document.querySelector('input[name="duracaoAula"]').addEventListener('change', atualizarHorarios);
     </script>
 </body>
 
