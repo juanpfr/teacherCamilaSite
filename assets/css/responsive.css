@@ -46,6 +46,11 @@
     margin-right: auto;
     margin: 30px;
   }
+
+  .py-5{
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+  }
 }
 
 /* ############################# */
